@@ -6,12 +6,9 @@ import json
 
 import requests
 from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 
-class ZhiHuSpider(object):
+def ZhiHuSpider():
 
     # 创建可见的Chrome浏览器， 方便调试
     driver = webdriver.Chrome()
@@ -53,4 +50,4 @@ class ZhiHuSpider(object):
 
 
 if __name__ == '__main__':
-    spider = ZhiHuSpider()
+    ZhiHuSpider()
