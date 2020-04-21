@@ -2,9 +2,7 @@
 
 import time
 import os
-import json
 import re
-import collections
 
 import requests
 from selenium import webdriver
@@ -46,21 +44,13 @@ def ZhiHuSpider():
             list_items = driver.find_elements_by_class_name("List-item")
             for i in range(crawled, len(list_items)):
                 item = list_items[i]
-                author = json.loads(item.find_element_by_tag_name("div").get_attribute("data-zop"))["authorName"]
-                print(author)
-                # if not os.path.exists(os.path.join(question_title, author)):
-                #     os.makedirs(os.path.join(question_title, author))
+                # author = json.loads(item.find_element_by_tag_name("div").get_attribute("data-zop"))["authorName"]
                 figures = item.find_elements_by_tag_name("figure")
                 for figure in figures:
                     img = figure.find_element_by_tag_name("img").get_attribute("data-original")
                     print(img)
                     if img:
                         f.write(img+"\n")
-                    # if img:
-                    #     res = requests.get(img)
-                    #     ima_name = os.path.join(question_title, author, img.split("/")[-1])
-                    #     with open(ima_name, "wb") as f:
-                    #         f.write(res.content)
                 crawled += 1
                 print(crawled)
                 print("1秒后抓取下一个用户回答")
@@ -70,18 +60,13 @@ def ZhiHuSpider():
                 action.move_by_offset(200, 100).click().perform()  # 鼠标左键点击， 200为x坐标， 100为y坐标
                 action.reset_actions()
                 action.move_by_offset(200, 100).click().perform()
-                action.reset_actions()
                 pop_flag = True
             time.sleep(3)
     driver.quit()
 
 
 def download(url, path):
-    try:
-        res = requests.get(url.strip())
-    except:
-        time.sleep(5)
-        res = requests.get(url.strip())
+    res = requests.get(url.strip())
     ima_name = os.path.join(path, url.split("/")[-1].strip())
     with open(ima_name, "wb") as new_img:
         new_img.write(res.content)
